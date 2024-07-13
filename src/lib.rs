@@ -234,17 +234,34 @@
 //! [stderr]: https://doc.rust-lang.org/std/io/fn.stderr.html
 //! [flush]: https://doc.rust-lang.org/std/io/trait.Write.html#tymethod.flush
 
-pub use crate::{
-    command::{Command, ExecutableCommand, QueueableCommand, SynchronizedUpdate},
-    error::{ErrorKind, Result},
-};
+#[cfg(not(feature = "key-only"))]
+pub use crate::command::{Command, ExecutableCommand, QueueableCommand, SynchronizedUpdate};
 
+pub use crate::error::{ErrorKind, Result};
+
+#[cfg(not(feature = "key-only"))]
 /// A module to work with the terminal cursor
 pub mod cursor;
+
 /// A module to read events.
-pub mod event;
+#[cfg(not(feature = "key-only"))]
+#[path = "event.rs"]
+mod event_everything;
+#[cfg(feature = "key-only")]
+mod event_key_only;
+pub mod event {
+    #[cfg(feature = "key-only")]
+    pub use super::event_key_only::*;
+
+    #[cfg(not(feature = "key-only"))]
+    pub use super::event_everything::*;
+}
+
+#[cfg(not(feature = "key-only"))]
 /// A module to apply attributes and colors on your text.
 pub mod style;
+
+#[cfg(not(feature = "key-only"))]
 /// A module to work with the terminal.
 pub mod terminal;
 
@@ -254,6 +271,11 @@ pub mod tty;
 #[cfg(windows)]
 /// A module that exposes one function to check if the current terminal supports ANSI sequences.
 pub mod ansi_support;
+
+#[cfg(not(feature = "key-only"))]
 mod command;
+
 mod error;
+
+#[cfg(not(feature = "key-only"))]
 pub(crate) mod macros;

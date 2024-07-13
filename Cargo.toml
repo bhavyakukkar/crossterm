@@ -30,6 +30,7 @@ default = ["bracketed-paste"]
 bracketed-paste = []
 event-stream = ["futures-core"]
 use-dev-tty = ["filedescriptor"]
+key-only = []
 
 #
 # Shared dependencies
