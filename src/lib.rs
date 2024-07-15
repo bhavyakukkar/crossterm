@@ -234,48 +234,42 @@
 //! [stderr]: https://doc.rust-lang.org/std/io/fn.stderr.html
 //! [flush]: https://doc.rust-lang.org/std/io/trait.Write.html#tymethod.flush
 
-#[cfg(not(feature = "key-only"))]
+#[cfg(feature = "more-than-key")]
 pub use crate::command::{Command, ExecutableCommand, QueueableCommand, SynchronizedUpdate};
 
 pub use crate::error::{ErrorKind, Result};
 
-#[cfg(not(feature = "key-only"))]
+#[cfg(feature = "more-than-key")]
 /// A module to work with the terminal cursor
 pub mod cursor;
 
 /// A module to read events.
-#[cfg(not(feature = "key-only"))]
-#[path = "event.rs"]
-mod event_everything;
-#[cfg(feature = "key-only")]
-mod event_key_only;
-pub mod event {
-    #[cfg(feature = "key-only")]
-    pub use super::event_key_only::*;
+#[cfg(feature = "more-than-key")]
+pub mod event;
+#[cfg(not(feature = "more-than-key"))]
+#[path = "event_key_only.rs"]
+pub mod event;
 
-    #[cfg(not(feature = "key-only"))]
-    pub use super::event_everything::*;
-}
-
-#[cfg(not(feature = "key-only"))]
+#[cfg(feature = "more-than-key")]
 /// A module to apply attributes and colors on your text.
 pub mod style;
 
-#[cfg(not(feature = "key-only"))]
+#[cfg(feature = "more-than-key")]
 /// A module to work with the terminal.
 pub mod terminal;
 
 /// A module to query if the current instance is a tty.
 pub mod tty;
 
+#[cfg(feature = "more-than-key")]
 #[cfg(windows)]
 /// A module that exposes one function to check if the current terminal supports ANSI sequences.
 pub mod ansi_support;
 
-#[cfg(not(feature = "key-only"))]
+#[cfg(feature = "more-than-key")]
 mod command;
 
 mod error;
 
-#[cfg(not(feature = "key-only"))]
+#[cfg(feature = "more-than-key")]
 pub(crate) mod macros;

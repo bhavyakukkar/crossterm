@@ -100,11 +100,11 @@ use timeout::PollTimeout;
 
 pub(crate) mod filter;
 mod read;
-mod source;
+pub mod source;
 #[cfg(feature = "event-stream")]
 mod stream;
 pub(crate) mod sys;
-mod timeout;
+pub mod timeout;
 
 /// Static instance of `InternalEventReader`.
 /// This needs to be static because there can be one event reader.

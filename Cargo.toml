@@ -26,11 +26,11 @@ all-features = true
 # Features
 #
 [features]
-default = ["bracketed-paste"]
+default = ["bracketed-paste", "more-than-key"]
 bracketed-paste = []
 event-stream = ["futures-core"]
 use-dev-tty = ["filedescriptor"]
-key-only = []
+more-than-key = ["dep:mio", "dep:signal-hook-mio"]
 
 #
 # Shared dependencies
@@ -60,8 +60,8 @@ crossterm_winapi = "0.9"
 libc = "0.2"
 signal-hook = { version = "0.3.13" }
 filedescriptor = { version = "0.8", optional = true }
-mio = { version = "0.8", features = ["os-poll"] }
-signal-hook-mio = { version = "0.2.3", features = ["support-v0_8"] }
+mio = { version = "0.8", features = ["os-poll"], optional = true }
+signal-hook-mio = { version = "0.2.3", features = ["support-v0_8"], optional = true }
 
 #
 # Dev dependencies (examples, ...)
